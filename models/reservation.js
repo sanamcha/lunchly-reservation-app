@@ -19,12 +19,12 @@ class Reservation {
 
 // added here ###########
 // for getting/setting no. of guests
-set numberGuests(val){
+set numGuests(val){
   if(val < 1) throw new Error("No empty guest");
   this._numberGuests = val;
 }
-
-get numberGuest(){
+ 
+get numGuests(){
   return this._numberGuests;
 }
 // for setting/getting start time
@@ -84,12 +84,12 @@ get startAt(){
 // added here
 // to find reservation by id
   static async get(id) {
-    const result = await db.query(
+    const results = await db.query(
       `select id, customer_id as "customerId", num_guests as "numGuests", start_at as "startAt", notes
         from reservations 
         where id = $1,`,[id]
     );
-      const reservation = results.row[0];
+      const reservation = results.rows[0];
       if(reservation === undefined){
         const err = new Error(`Couldnt find reservation:${id}`);
         err.status = 404;
